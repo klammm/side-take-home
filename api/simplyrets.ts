@@ -12,15 +12,15 @@ export const useSimplyRets = () => {
             try {
                 fetch(PROPERTIES_ENDPOINT, {
                     headers: new Headers({
-                        "Authorization": `Basic ${btoa('simplyrets:simplyrets') }`
+                        "Authorization": `Basic ${btoa('simplyrets:simplyrets')}`
                     }),
                 })
-                .then(res => res.json())
-                .then(response => {
-                    setData(response);
-                    localStorage.setItem('simplyrets', response);
-                })
-            } catch(err) {
+                    .then(res => res.json())
+                    .then(response => {
+                        setData(response);
+                        localStorage.setItem('simplyrets', response);
+                    })
+            } catch (err) {
                 setError(err as string);
                 console.error(err);
             } finally {
