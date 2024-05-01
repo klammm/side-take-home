@@ -1,14 +1,15 @@
 import { useState, useCallback, memo } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { useCoordinateContext } from '../../providers/coordinates-provider';
 
 const containerStyle = {
-    width: '400px',
-    height: '400px'
+    width: '100%',
+    height: '100vh'
 };
 
 const center = {
-    lat: -3.745,
-    lng: -38.523
+    lat: 37.769722,
+    lng: -122.476944,
 };
 
 const GoogleMaps = () => {
@@ -16,6 +17,8 @@ const GoogleMaps = () => {
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyCqxqAPlybcdfWGj5SX5kIDG7CmLtPiR58',
     });
+
+    const { setCoords } = useCoordinateContext();
 
     const [map, setMap] = useState(null);
 
@@ -31,9 +34,12 @@ const GoogleMaps = () => {
     }, []);
 
     const onMouseUp = (e) => {
-        console.log('=== e onMouseUp', e);
-        console.log('==== e lat lng', e.latLng.lat())
-        console.log('==== e lat lng', e.latLng.lng())
+        const lat = e.latLng.lat()
+        const lng = e.latLng.lng()
+        setCoords({
+            lat,
+            lng,
+        });
     }
 
     if (!isLoaded) {
@@ -41,10 +47,10 @@ const GoogleMaps = () => {
     }
 
     return (
-        <GoogleMap 
+        <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={5}
+            zoom={8}
             onLoad={onLoad}
             onUnmount={onUnmount}
             onMouseUp={onMouseUp}
