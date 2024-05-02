@@ -9,11 +9,11 @@ export const HeaderContainer = styled.header`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
-    @media only screen and (min-width: ${breakpointSizes.phone}) {
-        height: 4rem;
-        padding-left: 0.5rem;
-    }
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    height: 4rem;
+    padding-left: 0.5rem;
 
     @media only screen and (min-width: ${breakpointSizes.tablet_landscape}) {
         height: 6.5rem;

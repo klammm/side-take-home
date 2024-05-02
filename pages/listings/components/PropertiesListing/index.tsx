@@ -6,7 +6,11 @@ import { ListingCard } from './ListingCard';
 import { numberWithCommas } from '../../utils';
 import * as S from './PropertiesListing-styled';
 
-export const PropertiesListings: FC = () => {
+interface PropertiesListingProps {
+    show: boolean;
+}
+
+export const PropertiesListings: FC<PropertiesListingProps> = ({ show }) => {
     const { coords } = useCoordinateContext();
     const { data: propertiesData, isLoading: isLoadingPropertiesData } = useSimplyRets(coords);
 
@@ -17,7 +21,7 @@ export const PropertiesListings: FC = () => {
     }
 
     return (
-        <S.PropertiesListingContainer>
+        <S.PropertiesListingContainer $show={show}>
             {propertiesData.map((propertyData) => {
                 const { property, remarks, photos, address, listDate, listPrice, mlsId, } = propertyData;
                 const { bedrooms, bathsFull, bathsHalf, area } = property;

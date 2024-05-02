@@ -1,29 +1,35 @@
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback, memo, FC } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useCoordinateContext } from '../../providers/coordinates-provider';
 
-const containerStyle = {
+const CONTAINER_STYLE = {
     width: '100%',
     height: '100vh'
 };
 
-const center = {
+const CENTER = {
     lat: 37.769722,
     lng: -122.476944,
 };
 
-const GoogleMaps = () => {
+interface GoogleMapsViewProps {
+    show: boolean;
+}
+
+const GoogleMaps: FC<GoogleMapsViewProps> = ({ show }) => {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyCqxqAPlybcdfWGj5SX5kIDG7CmLtPiR58',
     });
-
     const { setCoords } = useCoordinateContext();
-
     const [map, setMap] = useState(null);
+    const containerStyles = {
+        ...CONTAINER_STYLE,
+        display: show ? 'block' : 'none',
+    }
 
     const onLoad = useCallback((map) => {
-        const bounds = new window.google.maps.LatLngBounds(center);
+        const bounds = new window.google.maps.LatLngBounds(CENTER);
         map.fitBounds(bounds);
 
         setMap(map);
@@ -48,8 +54,8 @@ const GoogleMaps = () => {
 
     return (
         <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
+            mapContainerStyle={containerStyles}
+            center={CENTER}
             zoom={8}
             onLoad={onLoad}
             onUnmount={onUnmount}

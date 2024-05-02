@@ -24,7 +24,7 @@ export const ListingCard: FC<ListingCardProps> = ({ bedrooms, bathrooms, area, l
             height={280}
             alt={remarks}
         />
-        <HeartStroke />
+        {/* <HeartStroke /> */}
         <S.ListingCardBedRoomBathRoom>{bedrooms} BR | {bathrooms} Bath | {area} Sq Ft</S.ListingCardBedRoomBathRoom>
         <S.ListingCardPrice>${listPrice}</S.ListingCardPrice>
         <S.ListingCardAddress>{address}</S.ListingCardAddress>
