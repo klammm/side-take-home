@@ -2,14 +2,16 @@ import { useState, useCallback, memo, FC } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useCoordinateContext } from '../../providers/coordinates-provider';
 
+import * as S from './MapView-styled';
+
 const CONTAINER_STYLE = {
     width: '100%',
     height: '100vh'
 };
 
 const CENTER = {
-    lat: 37.769722,
-    lng: -122.476944,
+    lat: 37.7697,
+    lng: -122.4769,
 };
 
 interface GoogleMapsViewProps {
@@ -23,10 +25,6 @@ const GoogleMaps: FC<GoogleMapsViewProps> = ({ show }) => {
     });
     const { setCoords } = useCoordinateContext();
     const [map, setMap] = useState(null);
-    const containerStyles = {
-        ...CONTAINER_STYLE,
-        display: show ? 'block' : 'none',
-    }
 
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(CENTER);
@@ -53,14 +51,16 @@ const GoogleMaps: FC<GoogleMapsViewProps> = ({ show }) => {
     }
 
     return (
-        <GoogleMap
-            mapContainerStyle={containerStyles}
-            center={CENTER}
-            zoom={8}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-            onMouseUp={onMouseUp}
-        />
+        <S.MapViewContainer $show={show}>
+            <GoogleMap
+                mapContainerStyle={CONTAINER_STYLE}
+                center={CENTER}
+                zoom={8}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+                onMouseUp={onMouseUp}
+            />
+        </S.MapViewContainer>
     )
 };
 
