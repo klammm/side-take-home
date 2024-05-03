@@ -22,7 +22,7 @@ export const PropertiesListings: FC<PropertiesListingProps> = ({ show }) => {
 
     return (
         <S.PropertiesListingContainer $show={show}>
-            {propertiesData.map((propertyData) => {
+            {Array.isArray(propertiesData) && propertiesData.map((propertyData) => {
                 const { property, remarks, photos, address, listDate, listPrice, mlsId, } = propertyData;
                 const { bedrooms, bathsFull, bathsHalf, area } = property;
 
@@ -33,6 +33,7 @@ export const PropertiesListings: FC<PropertiesListingProps> = ({ show }) => {
                 return (
                     <ListingCard
                         key={address.full}
+                        mlsId={mlsId}
                         bedrooms={bedrooms}
                         bathrooms={bathsFull + (bathsHalf / 2)}
                         area={area}

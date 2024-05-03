@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import styled from 'styled-components';
 import { breakpointSizes } from 'styles/breakpoints';
 
@@ -23,6 +24,13 @@ export const ListingCardContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-self: center;
+    position: relative;
+`;
+
+export const ListingCardFavoritesHeart = styled(Image)`
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
 `;
 
 export const ListingCardBedRoomBathRoom = styled.p`
