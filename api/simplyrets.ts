@@ -5,7 +5,7 @@ import { CoordinateContextValue } from '@/pages/listings/providers/coordinates-p
 const PROPERTIES_ENDPOINT = 'https://api.simplyrets.com/properties';
 
 interface SimplyRetsValue {
-    data: Record<string, any> | null;
+    data: Record<string, any> | string | null;
     error: string;
     isLoading: boolean;
 }
@@ -18,9 +18,13 @@ export const useSimplyRets = (coords: CoordinateContextValue['coords']): SimplyR
     const points = `${coords.lat},${coords.lng}`;
 
     useEffect(() => {
-        const fetchData = () => {
+        const simplyRetsCache = localStorage.getItem('simplyrets');
+        const fetchData = async () => {
             try {
+                // TODO: add coordinates to the api call. For some reason, 
+                // I'm getting 0 results from the SimplyRetsAPI everytime no matter what points I use.
                 // fetch(`${PROPERTIES_ENDPOINT}?points=${points}`, {
+
                 fetch(PROPERTIES_ENDPOINT, {
                     headers: new Headers({
                         "Authorization": `Basic ${btoa('simplyrets:simplyrets')}`
@@ -29,7 +33,7 @@ export const useSimplyRets = (coords: CoordinateContextValue['coords']): SimplyR
                     .then(res => res.json())
                     .then(response => {
                         setData(response);
-                        // localStorage.setItem('simplyrets', response);
+                        localStorage.setItem('simplyrets', JSON.stringify(response));
                     })
             } catch (err) {
                 setError(err as string);
@@ -39,7 +43,13 @@ export const useSimplyRets = (coords: CoordinateContextValue['coords']): SimplyR
             }
         };
 
-        fetchData();
+        // Read from the cache and use that for data
+        if (simplyRetsCache) {
+            setData(JSON.parse(simplyRetsCache))
+            setIsLoading(false);
+        } else {
+            fetchData();
+        }
     }, [points]);
 
     return {
