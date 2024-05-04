@@ -51,7 +51,7 @@ const GoogleMaps: FC<GoogleMapsViewProps> = ({ show }) => {
     }
 
     return (
-        <S.MapViewContainer $show={show}>
+        <S.MapViewContainer $show={show} data-testid="Mapview">
             <GoogleMap
                 mapContainerStyle={CONTAINER_STYLE}
                 center={CENTER}

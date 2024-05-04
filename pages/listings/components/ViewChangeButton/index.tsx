@@ -8,7 +8,7 @@ interface ViewChangeButtonProps {
 }
 
 export const ViewChangeButton: FC<ViewChangeButtonProps> = ({ onClick, mode }) => (
-  <S.ViewChangeButton onClick={onClick} type="button">
+  <S.ViewChangeButton onClick={onClick} type="button" data-testid="ViewChangeButton">
     {mode} View
   </S.ViewChangeButton>
 );

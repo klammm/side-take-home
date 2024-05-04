@@ -14,8 +14,6 @@ export const PropertiesListings: FC<PropertiesListingProps> = ({ show }) => {
     const { coords } = useCoordinateContext();
     const { data: propertiesData, isLoading: isLoadingPropertiesData } = useSimplyRets(coords);
 
-    console.log('===', propertiesData);
-
     if (isLoadingPropertiesData || !propertiesData) {
         return <p>Almost there I promise...</p>
     }
